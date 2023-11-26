@@ -7,7 +7,6 @@ public class ColaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		try {
 			this.addLastCola(element);
 		} catch (NullException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -32,7 +31,6 @@ public class ColaEncadenada<T extends Comparable <T>> extends ListaEncadenada<T>
 		try {
 			retorno = this.getElement(1);
 		} catch (PosException | VacioException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

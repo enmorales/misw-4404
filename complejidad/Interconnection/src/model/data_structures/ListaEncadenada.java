@@ -24,8 +24,6 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		size=1;
 	}
 	
-	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-	//isEmpty o que la posición no sea válida
 	public void addFirst(T element)
 	{
 		Nodo<T> actual= new Nodo<T>(element);
@@ -33,8 +31,6 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		first=actual;
 	}
 	
-	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-	//isEmpty o que la posición no sea válida
 	public void addLast(T element)
 	{
 		Nodo<T> actual= new Nodo<T>(element);
@@ -111,10 +107,8 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 	         }
 		 }
 		 size++;
-	}
-	
-	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-	//isEmpty o que la posición no sea válida
+	}	
+
 	public T removeFirst() throws VacioException
 	{
 		T primero= firstElement();
@@ -127,8 +121,6 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		
 	}
 	
-	//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-	//isEmpty o que la posición no sea válida
 	public T removeLast()
 	{
 		Nodo<T> penultimo= first;
@@ -420,7 +412,6 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 
 	@Override
 	public int compareTo(ILista o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 }

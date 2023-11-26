@@ -20,6 +20,5 @@ public interface ITablaSimbolos <K extends Comparable<K>,V extends Comparable <V
 	
 	public ILista<NodoTS<K, V>> darListaNodos();
 	
-	public int hash(K key);
-	
+	public int hash(K key);	
 }

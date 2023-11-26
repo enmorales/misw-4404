@@ -40,7 +40,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 			Vertex<K, V> vertice= getVertex(id);
 			verticesLista.insertElement(vertice, verticesLista.size()+1);
 		} catch (PosException | NullException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -173,7 +172,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -198,7 +196,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -220,7 +217,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 				actual = vertices2.getElement(i);
 				copia.insertVertex(actual.getId(), actual.getInfo());
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -232,7 +228,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 				actual = arcos.getElement(i);
 				copia.addEdge(actual.getDestination().getId(), actual.getSource().getId(), actual.getWeight());
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -257,7 +252,6 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		}
 		
 		unmark();
-		//Revisar
 		return tabla;
 	}
 	
@@ -316,9 +310,5 @@ public class GrafoListaAdyacencia <K extends Comparable<K> ,V extends Comparable
 		
 		unmark();
 		return path;
-	}
-	
-	
-
-	
+	}	
 }

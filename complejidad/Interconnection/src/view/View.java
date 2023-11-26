@@ -5,9 +5,6 @@ import model.logic.Modelo;
 
 public class View 
 {
-	    /**
-	     * Metodo constructor
-	     */
 	    public View()
 	    {
 	    	

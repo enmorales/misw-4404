@@ -179,7 +179,6 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 		}
 		catch (PosException | NullException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -204,8 +203,7 @@ public class TablaHashSeparteChaining <K extends Comparable<K>, V extends Compar
 							lista.insertElement(listaNodos.getElement(i).getElement(j).getValue(), lista.size()+1);
 						}
 					}
-				}
-				
+				}				
 			}
 		}
 		catch (PosException | NullException | VacioException e) 

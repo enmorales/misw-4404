@@ -16,7 +16,4 @@ public class TestArregloDinamico {
 	public void setUp1() {
 		arreglo= new ArregloDinamico(TAMANO);
 	}
-
-
-
 }

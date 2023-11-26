@@ -110,13 +110,11 @@ public class Country implements Comparable <Country>
 
 	@Override
 	public int compareTo(Country o) {
-		// TODO Auto-generated method stub
 		return 0;
 	}
 	
 	 public static class ComparadorXKm implements Comparator<Country>
 	 {
-
 		 public int compare(Country pais1, Country pais2) 
 		 {
 			 if (pais1.getDistlan()-pais2.getDistlan()<0)
@@ -132,27 +130,21 @@ public class Country implements Comparable <Country>
 				 return 0;
 			 }
 		 }
-
 	}
 	 
 	 public static class ComparadorXNombre implements Comparator<Country>
 	 {
-
 		 public int compare(Country pais1, Country pais2) 
 		 {
 			 return pais1.getCountryName().compareTo(pais2.getCountryName());
 		 }
-
 	}
 
+	public double getDistlan() {
+		return distlan;
+	}
 
-		public double getDistlan() {
-			return distlan;
-		}
-
-		public void setDistlan(double distlan) {
-			this.distlan = distlan;
-		}
-	
-	
+	public void setDistlan(double distlan) {
+		this.distlan = distlan;
+	}
 }

@@ -6,7 +6,4 @@ public class YaExisteException extends Exception
 	{
 		super(causa);
 	}
-	
-	
-
 }

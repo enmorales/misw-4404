@@ -25,14 +25,12 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
                elementos = (T[]) new Comparable[max];
                tamanoMax = max;
                tamanoAct = 0;
-        }
-        
-		//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-		//isEmpty o que la posición no sea válida
+        }        
+		
 		public void addLast( T dato )
         {
                if ( tamanoAct == tamanoMax )
-               {  // caso de arreglo lleno (aumentar tamaNo)
+               {
                     tamanoMax = 2 * tamanoMax;
                     T [ ] copia = elementos;
                     elementos = (T[])new Comparable[tamanoMax];
@@ -80,7 +78,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		}
 
 		public T buscar(T dato) {
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
 			T elemento=null;
 			boolean ya=false;
 			for (int i=0; i<tamanoAct && !ya; i++)
@@ -100,11 +97,8 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		}
 
 		public T deleteElement(T dato) throws VacioException, NullException
-		{
-			
-			// Recomendacion: Usar el criterio de comparacion natural (metodo compareTo()) definido en Strings.
-			T elemento=null;
-			
+		{			
+			T elemento=null;			
 
 			 if (isEmpty())
 			 {
@@ -142,23 +136,9 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 				}
 			 }
 			
-			return elemento;
-			
+			return elemento;			
 		}
-		
-//		public void invertir()
-//		{
-//			T[]copia=elementos;
-//			elementos=(T[])new Comparable[tamanoMax];
-//			for(int i =0;i<tamanoAct;i++)
-//			{
-//				elementos[tamanoAct-1-i]=copia[i];
-//			}
-//		}
 
-
-		//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-		//isEmpty o que la posición no sea válida
 		@Override
 		public void addFirst(T element) 
 		{
@@ -233,9 +213,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			
 		}
 
-
-		//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-		//isEmpty o que la posición no sea válida
 		@Override
 		public T removeFirst() 
 		{
@@ -255,8 +232,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 		}
 
-		//Siempre se llama a insert o a delete primero, esos métodos manejan los casos de que el elemento sea null, 
-		//isEmpty o que la posición no sea válida
 		@Override
 		public T removeLast() 
 		{

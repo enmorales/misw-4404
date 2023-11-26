@@ -101,7 +101,6 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -154,7 +153,6 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -337,7 +335,6 @@ public class Modelo {
 		}
 		catch (PosException | VacioException | NullException e1) 
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -364,7 +361,6 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException | NullException e1) 
 		{
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
@@ -420,7 +416,6 @@ public class Modelo {
 		}
 		catch (PosException | VacioException| NullException  e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
@@ -440,7 +435,6 @@ public class Modelo {
 			try {
 				fragmento+= "\n Nombre: " + ((Country) afectados.getElement(i)).getCountryName() + "\n Distancia al landing point: " + ((Country) afectados.getElement(i)).getDistlan();
 			} catch (PosException | VacioException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -505,7 +499,6 @@ public class Modelo {
 			} 
 			catch (PosException | VacioException| NullException  e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -559,7 +552,6 @@ public class Modelo {
 			
 			catch (PosException | VacioException| NullException  e) 
 			{
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
@@ -620,7 +612,6 @@ public class Modelo {
 		} 
 		catch (PosException | VacioException| NullException  e) 
 		{
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return tabla;
@@ -664,9 +655,7 @@ public class Modelo {
 
 				contador++;
 			}
-
-		}
-		
+		}		
 		
 		Reader in2 = new FileReader("./data/landing_points.csv");
 		Iterable<CSVRecord> records2 = CSVFormat.RFC4180.withHeader().parse(in2);
@@ -695,8 +684,7 @@ public class Modelo {
 			points.put(landingId, landing);
 			
 			Country pais= null;
-		}
-		
+		}		
 		
 		Reader in3 = new FileReader("./data/connections.csv");
 		Iterable<CSVRecord> records3 = CSVFormat.RFC4180.withHeader().parse(in3);
@@ -720,7 +708,6 @@ public class Modelo {
 			grafo.insertVertex(landing1.getLandingId()+ cableid, landing1);
 			
 			Vertex vertice1= grafo.getVertex(landing1.getLandingId()+ cableid);
-
 			
 			Landing landing2= (Landing) points.get(destination);
 
@@ -838,9 +825,6 @@ public class Modelo {
 			{
 				e.printStackTrace();
 			}
-			
-			
-
 		}
 		
 		try
@@ -867,17 +851,13 @@ public class Modelo {
 		catch(PosException | VacioException  e)
 		{
 			e.printStackTrace();
-		}
-		
-	
-		
-	
+		}	
 }
 	
 	private static float distancia(double lon1, double lat1, double lon2, double lat2) 
 	{
 
-		double earthRadius = 6371; // km
+		double earthRadius = 6371;
 
 		lat1 = Math.toRadians(lat1);
 		lon1 = Math.toRadians(lon1);
@@ -898,6 +878,4 @@ public class Modelo {
 		return (int) distance;
 
 	}
-
-
 }

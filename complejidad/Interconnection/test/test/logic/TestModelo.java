@@ -23,7 +23,7 @@ public class TestModelo<T> {
 	@Test
 	public void testModelo() {
 		assertTrue(modelo!=null);
-		assertEquals(0, modelo.darTamano());  // Modelo con 0 elementos presentes.
+		assertEquals(0, modelo.darTamano());
 	}
 
 	@Test
@@ -31,10 +31,5 @@ public class TestModelo<T> {
 		setUp2();
 		int x=modelo.darTamano();
 		assertEquals("No es el tamaño correcto", CAPACIDAD,x);
-		// TODO
-	}
-
-	
-
-	
+	}	
 }
