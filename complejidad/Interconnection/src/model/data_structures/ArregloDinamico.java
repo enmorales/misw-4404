@@ -237,11 +237,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		    } else if (pos == tamanoAct) {
 		        removeLast();
 		    } else {
-		        T[] copia = Arrays.copyOf(elementos, tamanoMax);
-
-		        System.arraycopy(copia, 0, elementos, 0, pos - 1);
-		        System.arraycopy(copia, pos, elementos, pos - 1, tamanoAct - pos);
-
+		        System.arraycopy(elementos, pos, elementos, pos - 1, tamanoAct - pos);
 		        tamanoAct--;
 		    }
 

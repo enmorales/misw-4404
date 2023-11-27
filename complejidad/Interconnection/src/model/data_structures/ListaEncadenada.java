@@ -65,47 +65,50 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		}
 	}
 	
-	public void insertElement(T elemento, int pos) throws PosException, NullException
-	{
-		 Nodo<T> nuevo = new Nodo<T>(elemento);
-		 
-		 if (pos<1 || pos-1 >size)
-		 {
-			 throw new PosException("La posición no es válida");
-		 }
-		 else if (elemento==null)
-		 {
-			 throw new NullException("No es válido el elemento ingresado");
-		 }
-		 
-		 else
-		 {
-			 if(isEmpty()) 
-	         {
-	             first = nuevo;
-	             last=first;
-	         }
-	         else if (pos == 1) 
-	         {
-	             this.addFirst(elemento);
-	         }
-	         else if (pos== size+1) 
-	         {
-	             this.addLast(elemento);
-	         }
-	         else 
-	         {
-	             Nodo<T> actual = first;
-	             for (int i = 0; i < pos-2; i++) 
-	             {
-	                 actual = actual.getNext();
-	             }
-	             nuevo.setNext(actual.getNext());
-	             actual.setNext(nuevo);
-	         }
-		 }
-		 size++;
-	}	
+	public void insertElement(T elemento, int pos) throws PosException, NullException {
+	    validatePosition(pos);
+	    validateElement(elemento);
+
+	    Nodo<T> nuevo = new Nodo<>(elemento);
+
+	    if (isEmpty()) {
+	        insertFirstElement(nuevo);
+	    } else if (pos == 1) {
+	        addFirst(elemento);
+	    } else if (pos == size + 1) {
+	        addLast(elemento);
+	    } else {
+	        insertElementAtPosition(nuevo, pos);
+	    }
+
+	    size++;
+	}
+
+	private void validatePosition(int pos) throws PosException {
+	    if (pos < 1 || pos - 1 > size) {
+	        throw new PosException("La posición no es válida");
+	    }
+	}
+
+	private void validateElement(T elemento) throws NullException {
+	    if (elemento == null) {
+	        throw new NullException("No es válido el elemento ingresado");
+	    }
+	}
+
+	private void insertFirstElement(Nodo<T> nuevo) {
+	    first = nuevo;
+	    last = first;
+	}
+
+	private void insertElementAtPosition(Nodo<T> nuevo, int pos) {
+	    Nodo<T> actual = first;
+	    for (int i = 0; i < pos - 2; i++) {
+	        actual = actual.getNext();
+	    }
+	    nuevo.setNext(actual.getNext());
+	    actual.setNext(nuevo);
+	}
 
 	public T removeFirst() throws VacioException
 	{
@@ -181,55 +184,44 @@ public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 		
 	}
 	
-	public T deleteElement(int pos) throws PosException, VacioException
-	{
-		T retorno=null;
-		
-		 if (pos<1 || pos >size)
-		 {
-			 throw new PosException("La posición no es válida");
-		 }
-		 else if (isEmpty())
-		 {
-			 throw new VacioException("La lista está vacía");
-		 }
-		 else
-		 {
-			if ( pos==1)
-			{
-				retorno=removeFirst();
-			}
-			else if (pos==size())
-			{
-				retorno=removeLast();
-			}
-			else 
-			{
-				Nodo<T> actual= first;
-				if(actual.getNext()!=null) 
-				{	
-					Nodo<T> anterior=null;
-					while(actual.getNext()!=null && !actual.getInfo().equals(getElement(pos-1)))
-					{
-						anterior=actual;
-						actual=actual.getNext();
-					}
-					retorno=actual.getInfo();
-					anterior.disconnectNext(anterior);
-				}
-				else 
-				{
-					Nodo<T> anterior=null;
-					
-					retorno=actual.getInfo();
-					anterior.disconnectNext(anterior);
-				}
-			}
-		}
-		
-		size--;
-		
-		return retorno;
+	public T deleteElement(int pos) throws PosException, VacioException {
+	    validatePosition(pos);
+	    validateNotEmpty();
+
+	    T retorno = null;
+
+	    if (pos == 1) {
+	        retorno = removeFirst();
+	    } else if (pos == size()) {
+	        retorno = removeLast();
+	    } else {
+	        retorno = deleteElementAtPosition(pos);
+	    }
+
+	    size--;
+
+	    return retorno;
+	}
+
+	private void validateNotEmpty() throws VacioException {
+	    if (isEmpty()) {
+	        throw new VacioException("La lista está vacía");
+	    }
+	}
+
+	private T deleteElementAtPosition(int pos)throws PosException, VacioException {
+	    Nodo<T> actual = first;
+	    Nodo<T> anterior = null;
+
+	    while (actual.getNext() != null && !actual.getInfo().equals(getElement(pos - 1))) {
+	        anterior = actual;
+	        actual = actual.getNext();
+	    }
+
+	    T retorno = actual.getInfo();
+	    anterior.disconnectNext(anterior);
+
+	    return retorno;
 	}
 	
 	public T firstElement() throws VacioException
