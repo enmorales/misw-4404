@@ -440,119 +440,70 @@ public class Modelo {
 		
 	}
 	
-	public ILista unificar(ILista lista, String criterio)
-	{
+	public ILista unificar(ILista lista, String criterio) {
+	    ILista lista2 = new ArregloDinamico(1);
 
-		ILista lista2=new ArregloDinamico(1);
+	    if ("Vertice".equals(criterio)) {
+	        compararYAgregarVertices(lista, lista2);
+	    } else {
+	        compararYAgregarPaises(lista, lista2);
+	    }
 
-		if(criterio.equals("Vertice"))
-		{
-			Comparator<Vertex<String, Landing>> comparador=null;
+	    return lista2;
+	}
 
-			Ordenamiento<Vertex<String, Landing>> algsOrdenamientoEventos=new Ordenamiento<Vertex<String, Landing>>();;
+	private void compararYAgregarVertices(ILista lista, ILista lista2) {
+	    Comparator<Vertex<String, Landing>> comparador = new Vertex.ComparadorXKey();
+	    Ordenamiento<Vertex<String, Landing>> algsOrdenamientoEventos = new Ordenamiento<>();
 
-			comparador= new Vertex.ComparadorXKey();
+	    try {
+	        if (lista != null) {
+	            algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
 
+	            for (int i = 1; i <= lista.size(); i++) {
+	                Vertex actual = (Vertex) lista.getElement(i);
+	                Vertex siguiente = (Vertex) lista.getElement(i + 1);
 
-			try 
-			{
+	                if (siguiente != null && comparador.compare(actual, siguiente) != 0) {
+	                    lista2.insertElement(actual, lista2.size() + 1);
+	                } else if (siguiente == null) {
+	                    Vertex anterior = (Vertex) lista.getElement(i - 1);
+	                    if (anterior == null || comparador.compare(anterior, actual) != 0) {
+	                        lista2.insertElement(actual, lista2.size() + 1);
+	                    }
+	                }
+	            }
+	        }
+	    } catch (PosException | VacioException | NullException e) {
+	        e.printStackTrace();
+	    }
+	}
 
-				if (lista!=null)
-				{
-					algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
+	private void compararYAgregarPaises(ILista lista, ILista lista2) {
+	    Comparator<Country> comparador = new Country.ComparadorXNombre();
+	    Ordenamiento<Country> algsOrdenamientoEventos = new Ordenamiento<>();
 
-					for(int i=1; i<=lista.size(); i++)
-					{
-						Vertex actual= (Vertex) lista.getElement(i);
-						Vertex siguiente= (Vertex) lista.getElement(i+1);
+	    try {
+	        if (lista != null) {
+	            algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
 
-						if(siguiente!=null)
-						{
-							if(comparador.compare(actual, siguiente)!=0)
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-						else
-						{
-							Vertex anterior= (Vertex) lista.getElement(i-1);
+	            for (int i = 1; i <= lista.size(); i++) {
+	                Country actual = (Country) lista.getElement(i);
+	                Country siguiente = (Country) lista.getElement(i + 1);
 
-							if(anterior!=null)
-							{
-								if(comparador.compare(anterior, actual)!=0)
-								{
-									lista2.insertElement(actual, lista2.size()+1);
-								}
-							}
-							else
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-
-					}
-				}
-			} 
-			catch (PosException | VacioException| NullException  e) 
-			{
-				e.printStackTrace();
-			}
-		}
-		else
-		{
-			Comparator<Country> comparador=null;
-
-			Ordenamiento<Country> algsOrdenamientoEventos=new Ordenamiento<Country>();;
-
-			comparador= new Country.ComparadorXNombre();
-
-			try 
-			{
-
-				if (lista!=null)
-				{
-					algsOrdenamientoEventos.ordenarMergeSort(lista, comparador, false);
-				}
-
-					for(int i=1; i<=lista.size(); i++)
-					{
-						Country actual= (Country) lista.getElement(i);
-						Country siguiente= (Country) lista.getElement(i+1);
-
-						if(siguiente!=null)
-						{
-							if(comparador.compare(actual, siguiente)!=0)
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-						else
-						{
-							Country anterior= (Country) lista.getElement(i-1);
-
-							if(anterior!=null)
-							{
-								if(comparador.compare(anterior, actual)!=0)
-								{
-									lista2.insertElement(actual, lista2.size()+1);
-								}
-							}
-							else
-							{
-								lista2.insertElement(actual, lista2.size()+1);
-							}
-						}
-
-					}
-				}
-			
-			catch (PosException | VacioException| NullException  e) 
-			{
-				e.printStackTrace();
-			}
-		}
-
-		return lista2;
+	                if (siguiente != null && comparador.compare(actual, siguiente) != 0) {
+	                    lista2.insertElement(actual, lista2.size() + 1);
+	                } else if (siguiente == null) {
+	                    Country anterior = (Country) lista.getElement(i - 1);
+	                    if (anterior == null || comparador.compare(anterior, actual) != 0) {
+	                        lista2.insertElement(actual, lista2.size() + 1);
+	                    }
+	                }
+	            }
+	        }
+	    } catch (PosException | VacioException | NullException e) {
+	        e.printStackTrace();
+	    }
 	}
 	
 	public ITablaSimbolos unificarHash(ILista lista)
