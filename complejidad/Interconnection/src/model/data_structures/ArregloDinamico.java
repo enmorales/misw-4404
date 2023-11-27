@@ -1,6 +1,6 @@
 package model.data_structures;
 
-
+import java.util.Arrays;
 
 public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		/**
@@ -25,7 +25,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
                elementos = (T[]) new Comparable[max];
                tamanoMax = max;
                tamanoAct = 0;
-        }        
+        }
 		
 		public void addLast( T dato )
         {
@@ -160,57 +160,37 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			else
 			{
 				elementos[0]=element;
-			}
-			
+			}			
 		}
 
 		@Override
-		public void insertElement(T elemento, int pos) throws PosException, NullException 
-		{
-			if (pos-1>tamanoMax)
-			{
-				throw new PosException("La posición no es válida");
-			}
-			else if (pos<1)
-			{
-				throw new PosException("La posición no es válida");
-			}
-			else
-			{
-				if (pos==1)
-				{
-					addFirst(elemento);
-				}
-				else if (tamanoAct+1==pos)
-				{
-					addLast(elemento);
-					
-				}
-				else
-				{
-					if ( tamanoAct == tamanoMax )
-		            {
-		                 tamanoMax = 2 * tamanoMax; 
-		            }
-		            T [ ] copia = elementos;
-		            elementos = (T[])new Comparable[tamanoMax];
-		            
-		            for (int i=0; i<pos-1; i++)
-		            {
-		            	elementos[i]= copia[i];
-		            }
-		            
-		            elementos[pos-1]=elemento;
-		            
-		            for(int i=pos; i<tamanoAct; i++)
-		            {
-		            	elementos[i]=copia[i-1];
-		            }
-				}
-				
-				tamanoAct++;
-			}
-			
+		public void insertElement(T elemento, int pos) throws PosException, NullException {
+		    if (pos < 1 || pos > tamanoMax + 1) {
+		        throw new PosException("La posición no es válida");
+		    }
+
+		    if (pos == 1) {
+		        addFirst(elemento);
+		    } else if (pos == tamanoAct + 1) {
+		        addLast(elemento);
+		    } else {
+		        if (tamanoAct == tamanoMax) {
+		            resizeArray();
+		        }
+
+		        T[] copia = Arrays.copyOf(elementos, tamanoMax);
+		        
+		        System.arraycopy(copia, 0, elementos, 0, pos - 1);
+		        elementos[pos - 1] = elemento;
+		        System.arraycopy(copia, pos - 1, elementos, pos, tamanoAct - pos + 1);
+		        
+		        tamanoAct++;
+		    }
+		}
+
+		private void resizeArray() {
+		    tamanoMax *= 2;
+		    elementos = Arrays.copyOf(elementos, tamanoMax);
 		}
 
 		@Override
@@ -229,7 +209,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			
 			tamanoAct--;
 			return elemento;
-
 		}
 
 		@Override
@@ -241,56 +220,33 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			return elemento;
 		}
 
-
 		@Override
-		public T deleteElement(int pos) throws PosException, VacioException 
-		{
-			T elemento=null;
-			
-			if (pos>tamanoMax)
-			{
-				throw new PosException("La posición no es válida");
-			}
-			else if (pos<1)
-			{
-				throw new PosException("La posición no es válida");
-			}
-			else if (isEmpty())
-			{
-				throw new VacioException("La lista está vacía");
-			}
-			else
-			{
-				elemento=elementos[pos];
-				if (pos==1)
-				{
-					removeFirst();
-				}
-				else if (pos==tamanoAct)
-				{
-					removeLast();
-				}
-				else
-				{
-					T [ ] copia = elementos;
-					elementos= (T[])new Comparable[tamanoMax];
-				
-					for (int i=0; i<pos-1; i++)
-					{
-						elementos[i]=copia[i];
-					}
-					
-					for(int i=pos-1; i<tamanoAct; i++)
-					{
-						elementos[i]=copia[i+1];
-					}
-					tamanoAct--;
-				}
-			}
+		public T deleteElement(int pos) throws PosException, VacioException {
+		    if (pos < 1 || pos > tamanoAct) {
+		        throw new PosException("La posición no es válida");
+		    }
 
-			return elemento;
+		    if (isEmpty()) {
+		        throw new VacioException("La lista está vacía");
+		    }
+
+		    T elemento = elementos[pos - 1];
+
+		    if (pos == 1) {
+		        removeFirst();
+		    } else if (pos == tamanoAct) {
+		        removeLast();
+		    } else {
+		        T[] copia = Arrays.copyOf(elementos, tamanoMax);
+
+		        System.arraycopy(copia, 0, elementos, 0, pos - 1);
+		        System.arraycopy(copia, pos, elementos, pos - 1, tamanoAct - pos);
+
+		        tamanoAct--;
+		    }
+
+		    return elemento;
 		}
-
 
 		@Override
 		public T firstElement() throws VacioException 
@@ -308,7 +264,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			return retorno;
 		}
 
-
 		@Override
 		public T lastElement() throws VacioException 
 		{
@@ -323,13 +278,11 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			
 		}
 
-
 		@Override
 		public boolean isEmpty() 
 		{
 			return tamanoAct<0;
 		}
-
 
 		@Override
 		public int isPresent(T element) throws NullException, VacioException 
@@ -359,7 +312,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 			return pos+1;
 		}
-
 
 		@Override
 		public void exchange(int pos1, int pos2) throws PosException, VacioException 
@@ -391,8 +343,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 					
 				elementos[pos1-1]=elemento2;
 				elementos[pos2-1]=elemento1;	 
-			 }
-			
+			 }			
 		}
 		
 		@Override
@@ -417,8 +368,7 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 			else
 			{
 				elementos[pos-1]=element;
-			}
-			
+			}			
 		}
 		
 		public ILista<T> sublista(int pos, int numElementos) throws PosException, VacioException, NullException
@@ -453,8 +403,6 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 
 		@Override
 		public int compareTo(ILista o) {
-			// TODO Auto-generated method stub
 			return 0;
 		}
-
 }
