@@ -259,89 +259,93 @@ public class Modelo {
 		
 	}
 	
-	public String req4String()
-	{
-		String fragmento="";
-		ILista lista1= landingidtabla.valueSet();
-		
-		String llave="";
-		
-		int distancia=0;
-		
-		try
-		{
-			int max=0;
-			for(int i=1; i<= lista1.size(); i++)
-			{
-				if(((ILista)lista1.getElement(i)).size()> max)
-				{
-					max= ((ILista)lista1.getElement(i)).size();
-					llave= (String) ((Vertex)((ILista)lista1.getElement(i)).getElement(1)).getId();
-				}
-			}
-			
-			ILista lista2= grafo.mstPrimLazy(llave);
-			
-			ITablaSimbolos tabla= new TablaHashSeparteChaining<>(2);
-			ILista candidatos= new ArregloDinamico<>(1);
-			for(int i=1; i<= lista2.size(); i++)
-			{
-				Edge arco= ((Edge) lista2.getElement(i));
-				distancia+= arco.getWeight();
-				
-				candidatos.insertElement(arco.getSource(), candidatos.size()+1);
-				
-				candidatos.insertElement(arco.getDestination(), candidatos.size()+1);
-				
-				tabla.put(arco.getDestination().getId(),arco.getSource() );
-			}
-			
-			ILista unificado= unificar(candidatos, "Vertice");
-			fragmento+= " La cantidad de nodos conectada a la red de expansión mínima es: " + unificado.size() + "\n El costo total es de: " + distancia;
-			
-			int maximo=0;
-			int contador=0;
-			PilaEncadenada caminomax=new PilaEncadenada();
-			for(int i=1; i<= unificado.size(); i++)
-			{
+	public String req4String() {
+	    try {
+	        String llave = encontrarLlaveMaxima();
+	        int distancia = 0;
+	        ILista lista2 = calcularMST(llave);
 
-				PilaEncadenada path= new PilaEncadenada();
-				String idBusqueda= (String) ((Vertex) unificado.getElement(i)).getId();
-				Vertex actual;
+	        ITablaSimbolos tabla = new TablaHashSeparteChaining<>(2);
+	        ILista candidatos = new ArregloDinamico<>(1);
 
-				while( (actual= (Vertex) tabla.get(idBusqueda))!=null && actual.getInfo()!=null)
-				{
-					path.push(actual);
-					idBusqueda= (String) ((Vertex)actual).getId();
-					contador++;
-				}
-				
-				if(contador>maximo)
-				{
-					caminomax=path;
-				}
-			}
-			
-			fragmento+="\n La rama más larga está dada por lo vértices: ";
-			for(int i=1; i<=caminomax.size(); i++)
-			{
-				Vertex pop= (Vertex) caminomax.pop();
-				fragmento+= "\n Id " + i + " : "+ pop.getId();
-			}
-		}
-		catch (PosException | VacioException | NullException e1) 
-		{
-			e1.printStackTrace();
-		}
-		
-		if(fragmento.equals(""))
-		{	
-			return "No hay ninguna rama";
-		}
-		else 
-		{
-			return fragmento;
-		}
+	        for (int i = 1; i <= lista2.size(); i++) {
+	            Edge arco = ((Edge) lista2.getElement(i));
+	            distancia += arco.getWeight();
+
+	            candidatos.insertElement(arco.getSource(), candidatos.size() + 1);
+	            candidatos.insertElement(arco.getDestination(), candidatos.size() + 1);
+
+	            tabla.put(arco.getDestination().getId(), arco.getSource());
+	        }
+
+	        ILista unificado = unificar(candidatos, "Vertice");
+	        String fragmento = generarFragmento(unificado, distancia, tabla);
+	        
+	        return fragmento.isEmpty() ? "No hay ninguna rama" : fragmento;
+	    } catch (PosException | VacioException | NullException e) {
+	        e.printStackTrace();
+	    }
+
+	    return "No hay ninguna rama"; // Si ocurre una excepción
+	}
+
+	private String encontrarLlaveMaxima() throws PosException, VacioException, NullException{
+	    int max = 0;
+	    String llave = "";
+	    ILista lista1 = landingidtabla.valueSet();
+
+	    for (int i = 1; i <= lista1.size(); i++) {
+	        if (((ILista) lista1.getElement(i)).size() > max) {
+	            max = ((ILista) lista1.getElement(i)).size();
+	            llave = (String) ((Vertex) ((ILista) lista1.getElement(i)).getElement(1)).getId();
+	        }
+	    }
+
+	    return llave;
+	}
+
+	private ILista calcularMST(String llave) {
+	    return grafo.mstPrimLazy(llave);
+	}
+
+	private String generarFragmento(ILista unificado, int distancia, ITablaSimbolos tabla) throws PosException, VacioException, NullException {
+	    String fragmento = " La cantidad de nodos conectada a la red de expansión mínima es: " + unificado.size() +
+	                       "\n El costo total es de: " + distancia;
+
+	    int maximo = 0;
+	    int contador = 0;
+	    PilaEncadenada caminomax = new PilaEncadenada();
+
+	    for (int i = 1; i <= unificado.size(); i++) {
+	        PilaEncadenada path = encontrarCaminoMasLargo(unificado, tabla, i);
+	        contador = path.size();
+
+	        if (contador > maximo) {
+	            caminomax = path;
+	            maximo = contador;
+	        }
+	    }
+
+	    fragmento += "\n La rama más larga está dada por los vértices: ";
+	    for (int i = 1; i <= caminomax.size(); i++) {
+	        Vertex pop = (Vertex) caminomax.pop();
+	        fragmento += "\n Id " + i + " : " + pop.getId();
+	    }
+
+	    return fragmento;
+	}
+
+	private PilaEncadenada encontrarCaminoMasLargo(ILista unificado, ITablaSimbolos tabla, int i) throws PosException, VacioException, NullException {
+	    PilaEncadenada path = new PilaEncadenada();
+	    String idBusqueda = (String) ((Vertex) unificado.getElement(i)).getId();
+	    Vertex actual;
+
+	    while ((actual = (Vertex) tabla.get(idBusqueda)) != null && actual.getInfo() != null) {
+	        path.push(actual);
+	        idBusqueda = (String) ((Vertex) actual).getId();
+	    }
+
+	    return path;
 	}
 	
 	public ILista req5(String punto)
