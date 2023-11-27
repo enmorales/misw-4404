@@ -31,5 +31,5 @@ public class TestModelo<T> {
 		setUp2();
 		int x=modelo.darTamano();
 		assertEquals("No es el tamaño correcto", CAPACIDAD,x);
-	}	
+	}
 }

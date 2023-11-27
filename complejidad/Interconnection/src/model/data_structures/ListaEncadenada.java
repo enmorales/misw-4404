@@ -1,7 +1,5 @@
 package model.data_structures;
 
-import java.util.Comparator;
-
 public class ListaEncadenada <T extends Comparable <T>> implements ILista<T>{
 
 	private Nodo<T> first;
