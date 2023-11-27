@@ -1,110 +1,124 @@
 package controller;
 
 import java.io.IOException;
-import java.util.Comparator;
 import java.util.Scanner;
-
-import model.data_structures.ILista;
-import model.data_structures.NullException;
-import model.data_structures.PosException;
-import model.data_structures.VacioException;
-import model.data_structures.YoutubeVideo;
 import model.logic.Modelo;
-import utils.Ordenamiento;
 import view.View;
 
 public class Controller<T> {
-
-	private Modelo modelo;
 		
 	private View view;
+	private Modelo modelo;
+	private Scanner lector;
 	
-	/**
-	 * Crear la vista y el modelo del proyecto
-	 * @param capacidad tamaNo inicial del arreglo
-	 */
 	public Controller ()
 	{
 		view = new View();
+		lector = new Scanner(System.in).useDelimiter("\n");
 	}
 		
-	public void run() 
-	{
-		Scanner lector = new Scanner(System.in).useDelimiter("\n");
-		boolean fin = false;
+	public void run() {
+	    boolean fin = false;
 
-		while( !fin )
-		{
-			view.printMenu();
+	    while (!fin) {
+	        view.printMenu();
 
-			int option = lector.nextInt();
-			switch(option){
-			case 1:
-				view.printMessage("--------- \nCargar datos");
-				modelo = new Modelo(1); 
-				try 
-				{
-					modelo.cargar();
-				} catch (IOException e) {
+	        int option = lector.nextInt();
+	        lector.nextLine();
 
-					e.printStackTrace();
-				}
-				view.printModelo(modelo);	
+	        switch (option) {
+	            case 1:
+	                cargarDatos();
+	                break;
+	            case 2:
+	                req1();
+	                break;
+	            case 3:
+	                req2();
+	                break;
+	            case 4:
+	                req3();
+	                break;
+	            case 5:
+	                req4();
+	                break;
+	            case 6:
+	                req5();
+	                break;
+	            case 7:
+	                fin = true;
+	                finalizar();
+	                break;
+	            default:
+	                opcionInvalida();
+	                break;
+	        }
+	    }
 
-				break;
-				
-			case 2:
-				view.printMessage("--------- \nIngrese el nombre del primer punto de conexión");
-				String punto1= lector.next();
-				lector.nextLine();
-				
-				view.printMessage("--------- \nIngrese el nombre del segundo punto de conexión");
-				String punto2= lector.next();
-				lector.nextLine();
-				
-				String res1=modelo.req1String(punto1, punto2);
-				view.printMessage(res1);
-				
-				break;
-				
-			case 3:
-				String res2= modelo.req2String();
-				view.printMessage(res2);
-				break;
-				
-			case 4:
-				view.printMessage("--------- \nIngrese el nombre del primer país");
-				String pais1= lector.next();
-				lector.nextLine();
-				
-				view.printMessage("--------- \nIngrese el nombre del segundo país");
-				String pais2= lector.next();
-				lector.nextLine();
-				
-				String res3= modelo.req3String(pais1, pais2);
-				view.printMessage(res3);
-				break;
-			case 5:
-				String res4= modelo.req4String();
-				view.printMessage(res4);
-				break;
-			case 6:
-				view.printMessage("--------- \nIngrese el nombre del punto de conexión");
-				String landing= lector.next();
-				lector.nextLine();
-				String res5= modelo.req5String(landing);
-				view.printMessage(res5);
-				break;
-			case 7:
-				view.printMessage("--------- \n Hasta pronto !! \n---------"); 
-				lector.close();
-				fin = true;
-				break;
-			default: 
-				view.printMessage("--------- \n Opcion Invalida !! \n---------");
-				break;
-			}
-		}
+	    lector.close();
+	}
 
-	}	
+	private void cargarDatos() {
+	    view.printMessage("--------- \nCargar datos");
+	    modelo = new Modelo(1);
+	    try {
+	        modelo.cargar();
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	    view.printModelo(modelo);
+	}
+
+	private void req1() {
+	    view.printMessage("--------- \nIngrese el nombre del primer punto de conexión");
+	    String punto1 = lector.next();
+	    lector.nextLine();
+
+	    view.printMessage("--------- \nIngrese el nombre del segundo punto de conexión");
+	    String punto2 = lector.next();
+	    lector.nextLine();
+
+	    String res1 = modelo.req1String(punto1, punto2);
+	    view.printMessage(res1);
+	}
+
+	private void req2() {
+	    String res2 = modelo.req2String();
+	    view.printMessage(res2);
+	}
+
+	private void req3() {
+	    view.printMessage("--------- \nIngrese el nombre del primer país");
+	    String pais1 = lector.next();
+	    lector.nextLine();
+
+	    view.printMessage("--------- \nIngrese el nombre del segundo país");
+	    String pais2 = lector.next();
+	    lector.nextLine();
+
+	    String res3 = modelo.req3String(pais1, pais2);
+	    view.printMessage(res3);
+	}
+
+	private void req4() {
+	    String res4 = modelo.req4String();
+	    view.printMessage(res4);
+	}
+
+	private void req5() {
+	    view.printMessage("--------- \nIngrese el nombre del punto de conexión");
+	    String landing = lector.next();
+	    lector.nextLine();
+
+	    String res5 = modelo.req5String(landing);
+	    view.printMessage(res5);
+	}
+
+	private void finalizar() {
+	    view.printMessage("--------- \n Hasta pronto !! \n---------");
+	}
+
+	private void opcionInvalida() {
+	    view.printMessage("--------- \n Opcion Invalida !! \n---------");
+	}
 }
