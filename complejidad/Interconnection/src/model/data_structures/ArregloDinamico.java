@@ -314,36 +314,22 @@ public class ArregloDinamico<T extends Comparable<T>> implements ILista<T> {
 		}
 
 		@Override
-		public void exchange(int pos1, int pos2) throws PosException, VacioException 
-		{
-			 if (pos1>tamanoMax)
-			 {
-				 throw new PosException("La posición no es válida");
-			 }
-			 else if (pos2>tamanoMax)
-			 {
-				 throw new PosException("La posición no es válida");
-			 }
-			 else if (pos1<1)
-			 {
-				 throw new PosException("La posición no es válida");
-			 }
-			 else if (pos2<1)
-			 {
-				 throw new PosException("La posición no es válida");
-			 }
-			 else if(isEmpty())
-			 {
-				 throw new VacioException("La lista está vacía");
-			 }
-			 else if ( pos1!=pos2 && tamanoAct>1)
-			 {
-				T elemento1=elementos[pos1-1];
-				T elemento2=elementos[pos2-1];
-					
-				elementos[pos1-1]=elemento2;
-				elementos[pos2-1]=elemento1;	 
-			 }			
+		public void exchange(int pos1, int pos2) throws PosException, VacioException {
+		    if (pos1 < 1 || pos1 > tamanoAct || pos2 < 1 || pos2 > tamanoAct) {
+		        throw new PosException("La posición no es válida");
+		    }
+
+		    if (isEmpty()) {
+		        throw new VacioException("La lista está vacía");
+		    }
+
+		    if (pos1 != pos2 && tamanoAct > 1) {
+		        T elemento1 = elementos[pos1 - 1];
+		        T elemento2 = elementos[pos2 - 1];
+
+		        elementos[pos1 - 1] = elemento2;
+		        elementos[pos2 - 1] = elemento1;
+		    }
 		}
 		
 		@Override
