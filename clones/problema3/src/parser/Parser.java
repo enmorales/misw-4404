@@ -3,6 +3,7 @@ package parser;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Set;
@@ -31,7 +32,7 @@ public class Parser {
 		return Float.parseFloat(token);
 	}
 	
-	public ArrayList readFromTokens(String[] tokens) throws Exception {
+	public ArrayList<Serializable> readFromTokens(String[] tokens) throws Exception {
 		if(tokens.length == 0)
 			throw new Exception("SYNTAX ERROR - Unexpected end of expression");
 		
@@ -39,17 +40,15 @@ public class Parser {
 		tokens = Arrays.copyOfRange(tokens, 1, tokens.length);
 		
 		if(token.equals("(")) {
-			ArrayList nestedExpression = new ArrayList();
+			ArrayList<Serializable> nestedExpression = new ArrayList<Serializable>();
 			while(tokens.length > 0 && !tokens[0].equals(")")) {
-				ArrayList parsedNested = readFromTokens(tokens);
+				ArrayList<Serializable> parsedNested = readFromTokens(tokens);
 				if(parsedNested.size() == 1) {
-					nestedExpression.add(parsedNested.get(0));
-					tokens = Arrays.copyOfRange(tokens, 1, tokens.length);
+				    nestedExpression.add(parsedNested.get(0));
+				} else {
+				    nestedExpression.add(parsedNested);
 				}
-				else {
-					nestedExpression.add(parsedNested);
-					tokens = Arrays.copyOfRange(tokens, parsedNested.size()+2, tokens.length);
-				}
+				tokens = Arrays.copyOfRange(tokens, parsedNested.size() + 1, tokens.length);
 			}
 			if(tokens.length == 0)
 				throw new Exception("SYNTAX ERROR - Unexpected end of expression");

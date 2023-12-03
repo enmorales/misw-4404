@@ -1,0 +1,59 @@
+commit abc7a8348d976b1b4e2c0c4d53d8e147271c1c3a
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 22:38:43 2023 -0500
+
+    refactorizacion para bajar el criterio Cyclomatic Complexity con los valores mas altos
+
+commit 9a2ca09cb134ae352e97e327346c4c2bb9f86b6f
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 21:51:19 2023 -0500
+
+    solucion para Cyclomatic Complexity del metodo exchange en la clase ArregloDinamico
+
+commit e191d68d0fb082f13b17f68706c9abf41bdeafdb
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 21:49:30 2023 -0500
+
+    solucion para Cyclomatic Complexity del metodo deleteElement en la clase ArregloDinamico
+
+commit d4cec6e9fcc53f741d7c36a0ac40eba9daf3f302
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 21:08:44 2023 -0500
+
+    Solucion para Cyclomatic Complexity del metodo run en la clase Controller
+
+commit 797b1bbf8b2145356e151a1161eff389dea337fb
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 20:52:24 2023 -0500
+
+    Solucion para Cyclomatic Complexity del metodo req4String en la clase Modelo
+
+commit f3f50a9e68b9e830ea92b2bc9772e4ea2c3466aa
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 20:24:08 2023 -0500
+
+    Solucion para Cyclomatic Complexity y Modified Extended Cyclomatic Complexity del metodo unificar en la clase Modelo
+
+commit 7e7252166ca807b51c7fda5dd4198790765e1420
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 20:08:39 2023 -0500
+
+    Solucion para Cyclomatic Complexity y Modified Extended Cyclomatic Complexity del metodo cargar
+
+commit ada9ed51eb251ec45d773e558740f607d677b0b4
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 17:51:04 2023 -0500
+
+    removiendo funciones duplicadas isPrime() y nextPrime() de las clases TablaHashSeparteChaining y TablaHashLinearProbing
+
+commit e1abdf4deb6722b5355e71ab6f3ee8c97a1e00d2
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 17:17:42 2023 -0500
+
+    Se eliminan comentarios innecesarios de todos los archivos de la aplicacion
+
+commit 753e9701ec0487208af7b57992cfe64e5dd5e4d6
+Author: KRIMZON\krimzon <morales.edinson@outlook.com>
+Date:   Sun Nov 26 17:04:14 2023 -0500
+
+    adding git ignore
